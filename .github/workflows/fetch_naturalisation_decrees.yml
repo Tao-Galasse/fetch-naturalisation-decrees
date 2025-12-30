@@ -1,0 +1,27 @@
+# This workflow will run daily at 08:00 UTC to check for newly published naturalisation decrees
+
+name: Fetch naturalisation decrees
+
+on:
+  workflow_dispatch: # Allow to trigger actions manually, for testing purpose
+  schedule:
+    - cron: '0 8 * * *' # Daily, at 10 AM in summer & 9 AM in winter, in Europe/Paris timezone
+
+env:
+  LEGIFRANCE_CLIENT_ID: ${{ secrets.LEGIFRANCE_CLIENT_ID }}
+  LEGIFRANCE_CLIENT_SECRET: ${{ secrets.LEGIFRANCE_CLIENT_SECRET }}
+  DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+  DISCORD_CHANNEL_ID: ${{ secrets.DISCORD_CHANNEL_ID }}
+
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.4.8'
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+    - name: Check for newly published naturalisation decrees
+      run: ruby fetch_naturalisation_decrees.rb
