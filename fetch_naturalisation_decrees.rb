@@ -33,7 +33,7 @@ urls = results.map do |result|
 end
 
 # Si au moins une url a été trouvée, on l'envoie dans un salon dédié sur Discord (si configuré).
-return unless ENV['DISCORD_TOKEN'] && ENV['DISCORD_CHANNEL_ID']
+return unless urls.any? && ENV['DISCORD_TOKEN'] && ENV['DISCORD_CHANNEL_ID']
 
 discord_bot = Discordrb::Bot.new(token: ENV['DISCORD_TOKEN'])
 discord_bot.send_message(
