@@ -5,7 +5,7 @@ name: Fetch naturalisation decrees
 on:
   workflow_dispatch: # Allow to trigger actions manually, for testing purpose
   schedule:
-    - cron: '0 8 * * *' # Daily, at 10 AM in summer & 9 AM in winter, in Europe/Paris timezone
+    - cron: '0 18 * * *' # Daily, at 20h in summer & 19h in winter, in Europe/Paris timezone
 
 env:
   LEGIFRANCE_CLIENT_ID: ${{ secrets.LEGIFRANCE_CLIENT_ID }}
